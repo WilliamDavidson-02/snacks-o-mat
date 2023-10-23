@@ -10,7 +10,7 @@ $inventory = [
         'icon' => '🍩'
     ],
     'peanut' => [
-        'category' => 'nuts',
+        'category' => 'snacks',
         'icon' => '🥜'
     ],
     'popcorn' => [

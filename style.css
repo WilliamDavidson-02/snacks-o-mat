@@ -42,6 +42,10 @@ h3 {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -147,6 +151,12 @@ nav {
 .item-card-btn:hover {
   transition: 0.2s;
   background: var(--emerald-300);
+}
+
+.stock-btn {
+  width: unset;
+  display: flex;
+  align-items: center;
 }
 
 .item-card-btn:active {
