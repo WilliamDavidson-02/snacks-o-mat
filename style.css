@@ -112,6 +112,8 @@ nav {
   border: 1px solid var(--emerald-600);
   border-radius: 10px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .item-title-container {
@@ -130,6 +132,10 @@ nav {
 
 .item-content {
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .item-icon {
@@ -162,6 +168,17 @@ nav {
 .item-card-btn:active {
   transition: 0.2s;
   transform: scale(0.95);
+}
+
+.mix-icon-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.mix-icon {
+  font-size: 3rem;
 }
 
 @media (max-width: 1000px) {

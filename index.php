@@ -32,7 +32,7 @@ require_once __DIR__ . '/header.php'; ?>
 
 <main>
     <?php require_once __DIR__ . '/navigation.php'; ?>
-    <form method="get" class="item-card-container">
+    <form class="item-card-container">
         <?php foreach ($_SESSION['inventory'] as $index => $item) : ?>
             <div class="item-card">
                 <div class="item-title-container">
@@ -41,8 +41,8 @@ require_once __DIR__ . '/header.php'; ?>
                 <div class="item-content">
                     <div class="item-icon"><?= $item['icon']; ?></div>
                     <div class="item-info-container">
-                        <p class="price">$<?= $item['price']; ?></p>
-                        <p class="stock">Stock <?= $item['stock']; ?></p>
+                        <p>$<?= $item['price']; ?></p>
+                        <p>Stock <?= $item['stock']; ?></p>
                     </div>
                     <button name="snack" value="<?= $index; ?>" type="submit" class="item-card-btn">Add to cart</button>
                 </div>

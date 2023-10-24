@@ -19,7 +19,7 @@ function generateMixPacks(): array
 {
     global $inventory;
 
-    $packNames = [['name' => 'Delightful Treats', 'category' => 'baked goods'], ['name' => 'Sweet Sensations', 'category' => 'sweets'], ['name' => 'Divine Desserts', 'category' => 'desserts'], ['name' => 'Refreshing Quenchers', 'category' => 'beverages'], ['name' => 'Eclectic Fusion', 'category' => 'random'], ['name' => 'Super Deluxe Delights', 'category' => 'all']];
+    $packNames = [['name' => 'delightful treats', 'category' => 'baked goods'], ['name' => 'sweet sensations', 'category' => 'sweets'], ['name' => 'divine desserts', 'category' => 'desserts'], ['name' => 'refreshing quenchers', 'category' => 'beverages'], ['name' => 'eclectic fusion', 'category' => 'random'], ['name' => 'super deluxe delights', 'category' => 'all']];
     $packs = [];
 
     foreach ($packNames as $pack) {
@@ -43,7 +43,7 @@ function generateMixPacks(): array
                     array_splice($categoryItems, 5);
                 }
         }
-        $packs[] = [$pack['name'] => $categoryItems];
+        $packs[$pack['name']] = $categoryItems;
     }
 
     return $packs;
