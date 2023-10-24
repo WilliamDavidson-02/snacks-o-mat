@@ -15,6 +15,30 @@ if (!isset($_SESSION['mixPacks'])) {
 // echo '<pre/>';
 // die(var_dump(generateMixPacks($_SESSION['inventory'])));
 
+if (isset($_GET['pack'])) {
+    $pack = $_SESSION['mixPacks'][$_GET['pack']];
+    if (($_SESSION['wallet'] - $pack['price']) >= 0) {
+        $isInStock = true;
+        foreach ($pack['items'] as $key => $item) {
+            if ($_SESSION['inventory'][$key]['stock'] - 1 < 0) {
+                $isInStock = false;
+            }
+        }
+        if ($isInStock) {
+            $_SESSION['cart'][] = $_GET['pack'];
+            foreach ($_SESSION['inventory'] as $itemName => $item) {
+                if (array_key_exists($itemName, $pack['items'])) {
+                    $_SESSION['inventory'][$itemName]['stock'] -= 1;
+                }
+            }
+            $_SESSION['wallet'] -= $pack['price'];
+        }
+    }
+    // preventing same action to run again if page is reloaded.
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
 require_once __DIR__ . '/header.php';
 ?>
 <main>
