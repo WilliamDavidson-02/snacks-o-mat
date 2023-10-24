@@ -15,33 +15,32 @@ function generatePriceAndInventory(): array
     }, $inventory);
 }
 
-function generateMixPacks(): array
+function generateMixPacks(array $inventory): array
 {
-    global $inventory;
 
-    $packNames = [['name' => 'delightful treats', 'category' => 'baked goods'], ['name' => 'sweet sensations', 'category' => 'sweets'], ['name' => 'divine desserts', 'category' => 'desserts'], ['name' => 'refreshing quenchers', 'category' => 'beverages'], ['name' => 'eclectic fusion', 'category' => 'random'], ['name' => 'super deluxe delights', 'category' => 'all']];
+    $packNames = [['name' => 'delightful treats', 'category' => 'baked goods'], ['name' => 'sweet sensations', 'category' => 'sweets'], ['name' => 'divine desserts', 'category' => 'desserts'], ['name' => 'refreshing quenchers', 'category' => 'beverages'], ['name' => 'eclectic fusion', 'category' => 'random'], ['name' => 'super deluxe Delights', 'category' => 'all']];
     $packs = [];
 
     foreach ($packNames as $pack) {
-        $categoryItems = [];
+        $categoryItems = ['price' => 0, 'items' => []];
         switch ($pack['category']) {
             case 'random':
                 $randomSnacks = $inventory;
-                shuffle($randomSnacks);
-                array_splice($randomSnacks, 10);
-                $categoryItems = $randomSnacks;
+                $categoryItems['items'] = array_slice($randomSnacks, 0, 10, true);
                 break;
             case 'all':
-                $categoryItems = $inventory;
+                $categoryItems['items'] = $inventory;
                 break;
             default:
-                $categoryItems = array_filter($inventory, function ($item) use ($pack) {
+                $categoryItems['items'] = array_filter($inventory, function ($item) use ($pack) {
                     return $item['category'] === $pack['category'];
                 });
-                if (count($categoryItems) > 5) {
-                    shuffle($categoryItems);
-                    array_splice($categoryItems, 5);
+                if (count($categoryItems['items']) > 5) {
+                    $categoryItems['items'] = array_slice($categoryItems['items'], 0, 5, true);
                 }
+        }
+        foreach ($categoryItems['items'] as $item) {
+            $categoryItems['price'] += $item['price'];
         }
         $packs[$pack['name']] = $categoryItems;
     }

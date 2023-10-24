@@ -133,8 +133,8 @@ nav {
 .item-content {
   padding: 10px;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  gap: 10px;
   flex-grow: 1;
 }
 
@@ -145,13 +145,10 @@ nav {
 
 .item-card-btn {
   width: 100%;
-  background: var(--emerald-400);
-  border: 1px solid var(--emerald-600);
-  border-radius: 10px;
   font-weight: 500;
   font-size: 1.2rem;
-  color: var(--emerald-700);
   transition: 0.2s;
+  margin-top: auto;
 }
 
 .item-card-btn:hover {
@@ -179,6 +176,36 @@ nav {
 
 .mix-icon {
   font-size: 3rem;
+}
+
+.items-words-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.green-container {
+  background: var(--emerald-400);
+  border: 1px solid var(--emerald-600);
+  border-radius: 10px;
+  color: var(--emerald-700);
+}
+
+.price {
+  display: inline;
+  padding: 5px 10px;
+}
+
+.item-name {
+  border: 1px solid var(--emerald-600);
+  padding: 0 3px;
+  border-radius: 5px;
+}
+
+.item-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 @media (max-width: 1000px) {
