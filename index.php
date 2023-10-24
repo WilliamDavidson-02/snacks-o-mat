@@ -41,7 +41,7 @@ require_once __DIR__ . '/header.php'; ?>
                 <div class="item-content">
                     <div class="item-icon"><?= $item['icon']; ?></div>
                     <div class="item-info-container">
-                        <div class="green-container price">$<?= $item['price']; ?></div>
+                        <div class="price">$<?= $item['price']; ?></div>
                         <div class="item-name">Stock <?= $item['stock']; ?></div>
                     </div>
                     <button name="snack" value="<?= $index; ?>" type="submit" class="item-card-btn green-container">Add to cart</button>
