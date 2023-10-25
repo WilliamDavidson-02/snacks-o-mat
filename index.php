@@ -7,15 +7,7 @@ require_once __DIR__ . '/functions.php';
 initialSessionSet();
 
 if (isset($_GET['snack'])) {
-    $snack = $_SESSION['inventory'][$_GET['snack']];
-    if (($_SESSION['wallet'] - $snack['price']) >= 0 && $snack['stock'] > 0) {
-        $_SESSION['cart'][] = $_GET['snack'];
-        $_SESSION['inventory'][$_GET['snack']]['stock'] -= 1;
-        $_SESSION['wallet'] -= $snack['price'];
-    }
-    // preventing same action to run again if page is reloaded.
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit;
+    addItemToCart($_GET['snack']);
 }
 
 if (isset($_GET['stock'])) {

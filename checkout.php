@@ -3,6 +3,23 @@ session_start();
 
 require_once __DIR__ . '/functions.php';
 
+if (isset($_GET['minus'])) {
+    $key = array_search($_GET['minus'], $_SESSION['cart']); // $key returns int representing the index.
+    if ($key !== false) {
+        unset($_SESSION['cart'][$key]);
+    }
+} else if (isset($_GET['add'])) {
+    if (array_key_exists($_GET['add'], $inventory)) {
+        addItemToCart($_GET['add']);
+    } else { // else it is a pack.
+        addPackToCart($_GET['add']);
+    }
+} else if (isset($_GET['delete'])) {
+    $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) {
+        return $item !== $_GET['delete'];
+    });
+}
+
 $cart = array_count_values($_SESSION['cart']);
 
 $cart = array_combine(array_keys($cart), array_map(function ($count) {
@@ -34,9 +51,9 @@ require_once __DIR__ . '/header.php';
                             <div>$<?= $item['price']; ?></div>
                         </div>
                         <form class="flex">
-                            <button class="stock-btn item-card-btn blue-container"><i class="fa-solid fa-minus"></i></button>
-                            <button class="stock-btn item-card-btn blue-container"><i class="fa-solid fa-plus"></i></button>
-                            <button class="stock-btn item-card-btn blue-container"><i class="fa-solid fa-trash-can"></i></button>
+                            <button type="submit" name="minus" value="<?= $itemName; ?>" class="stock-btn item-card-btn blue-container"><i class="fa-solid fa-minus"></i></button>
+                            <button type="submit" name="add" value="<?= $itemName; ?>" class="stock-btn item-card-btn blue-container"><i class="fa-solid fa-plus"></i></button>
+                            <button type="submit" name="delete" value="<?= $itemName; ?>" class="stock-btn item-card-btn blue-container"><i class="fa-solid fa-trash-can"></i></button>
                         </form>
                     </div>
                     <?php if ($itemName !== end($cartKeys)) : ?>
