@@ -47,3 +47,8 @@ function generateMixPacks(array $inventory): array
 
     return $packs;
 }
+
+function sanitizeInput(string $input): string
+{
+    return strtolower(trim(htmlspecialchars($input)));
+}

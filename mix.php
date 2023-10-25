@@ -52,27 +52,51 @@ if (isset($_GET['pack'])) {
     exit;
 }
 
-if (isset($_GET['filter']) || isset($_GET['wordFilterType']) || isset($_GET['clearFilterType'])) {
+if (isset($_GET['filter']) || isset($_GET['wordFilterType']) || isset($_GET['clearFilterType']) || isset($_GET['removeWord'])) {
     $_SESSION['filter']['min'] = $_GET['min'];
     $_SESSION['filter']['max'] = $_GET['max'];
 
     if (!empty($_GET['wordFilterInput'])) {
-        $word = strtolower(trim(htmlspecialchars($_GET['wordFilterInput'])));
+        $word = sanitizeInput($_GET['wordFilterInput']);
         if (!in_array($word, $_SESSION['filter']['wordFilter']['items']) && array_key_exists($word, $inventory)) {
             $_SESSION['filter']['wordFilter']['items'][] = $word;
         }
     }
 
+    if (isset($_GET['removeWord'])) {
+        $_SESSION['filter']['wordFilter']['items'] = array_filter($_SESSION['filter']['wordFilter']['items'], function ($item) {
+            return $item !== $_GET['removeWord'];
+        });
+    }
+
     if (isset($_GET['wordFilterType'])) {
         $_SESSION['filter']['wordFilter']['filterType'] = $_GET['wordFilterType'];
     } else if (isset($_GET['clearFilterType'])) {
-        $_SESSION['filter']['wordFilter']['filterType'] = 'test';
+        $_SESSION['filter']['wordFilter']['filterType'] = '';
     }
 
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
 
+$filteredPacks = array_filter($_SESSION['mixPacks'], function ($pack) {
+    return $pack['price'] >= $_SESSION['filter']['min'] && $pack['price'] <= $_SESSION['filter']['max'];
+});
+
+if (!empty($_SESSION['filter']['wordFilter']['filterType'])) {
+    $filteredPacks = array_filter($filteredPacks, function ($pack) {
+        $items = array_keys($pack['items']);
+        $filterItems = $_SESSION['filter']['wordFilter']['items'];
+
+        if ($_SESSION['filter']['wordFilter']['filterType'] === 'include') {
+            return !empty(array_intersect($items, $filterItems)); // Checks if any of the keys of the pack items is in filterItems.
+        } else if ($_SESSION['filter']['wordFilter']['filterType'] === 'exclude') {
+            return empty(array_intersect($items, $filterItems)); // Checks if any of the keys of the pack items is in filterItems.
+        }
+
+        return false;
+    });
+}
 
 require_once __DIR__ . '/header.php';
 ?>
@@ -101,26 +125,24 @@ require_once __DIR__ . '/header.php';
             </div>
             <div class="filter-words flex">
                 <?php foreach ($_SESSION['filter']['wordFilter']['items'] as $item) : ?>
-                    <span class="item-name"><?= ucfirst($item); ?></span>
+                    <button type="submit" name="removeWord" value="<?= $item; ?>" class="item-name"><?= ucfirst($item); ?></button>
                 <?php endforeach; ?>
             </div>
         </div>
     </form>
     <form class="item-card-container">
-        <?php foreach ($_SESSION['mixPacks'] as $packName => $pack) : ?>
+        <?php foreach ($filteredPacks as $packName => $pack) : ?>
             <div class="item-card">
                 <div class="item-title-container">
                     <h3><?= ucfirst($packName); ?></h3>
                 </div>
                 <div class="item-content">
-                    <div class="item-info-container">
-                        <div class="items-words-container">
-                            <?php foreach ($pack['items'] as $itemName => $item) : ?>
-                                <div class="item-name"><?= ucfirst($itemName); ?></div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="price">$<?= $pack['price']; ?></div>
+                    <div class="items-words-container">
+                        <?php foreach ($pack['items'] as $itemName => $item) : ?>
+                            <div class="item-name"><?= ucfirst($itemName); ?></div>
+                        <?php endforeach; ?>
                     </div>
+                    <div class="price">$<?= $pack['price']; ?></div>
                     <button name="pack" value="<?= $packName; ?>" type="submit" class="item-card-btn green-container">Add to cart</button>
                 </div>
             </div>

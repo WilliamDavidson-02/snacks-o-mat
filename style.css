@@ -149,7 +149,6 @@ nav,
   font-weight: 500;
   font-size: 1.2rem;
   transition: 0.2s;
-  margin-top: auto;
 }
 
 .item-card-btn:hover {
@@ -190,6 +189,7 @@ nav,
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--emerald-900);
+  margin-top: auto;
 }
 
 .item-name {
