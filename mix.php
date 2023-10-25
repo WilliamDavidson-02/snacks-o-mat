@@ -121,6 +121,10 @@ if (!empty($_SESSION['filter']['wordFilter']['filterType'])) {
     });
 }
 
+if (isset($_GET['stock'])) {
+    orderNewStock();
+}
+
 require_once __DIR__ . '/header.php';
 ?>
 <main>
@@ -137,14 +141,14 @@ require_once __DIR__ . '/header.php';
                     <input class="item-name stock-btn" type="number" min="0" max="<?= $_SESSION['highestPrice']; ?>" name="max" value="<?= $_SESSION['filter']['max']; ?>">
                 </div>
             </div>
-            <button class="item-card-btn green-container stock-btn center" name="filter" type="submit">Filter</button>
+            <button class="item-card-btn blue-container stock-btn center" name="filter" type="submit">Filter</button>
         </div>
         <div class="include-exclude flex-col">
             <div class="flex">
                 <input autocomplete="off" class="item-name stock-btn" type="text" name="wordFilterInput" placeholder="Add item">
-                <button type="submit" class="item-name stock-btn <?= $_SESSION['filter']['wordFilter']['filterType'] === 'include' ? 'green-container' : ''; ?>" name="wordFilterType" value="include">Include</button>
-                <button type="submit" class="item-name stock-btn <?= $_SESSION['filter']['wordFilter']['filterType'] === 'exclude' ? 'green-container' : ''; ?>" name="wordFilterType" value="exclude">Exclude</button>
-                <button type="submit" name="clearFilterType" class="green-container item-card-btn w-unset stock-btn"><i class="fa-solid fa-x"></i></button>
+                <button type="submit" class="item-name stock-btn <?= $_SESSION['filter']['wordFilter']['filterType'] === 'include' ? 'blue-container' : ''; ?>" name="wordFilterType" value="include">Include</button>
+                <button type="submit" class="item-name stock-btn <?= $_SESSION['filter']['wordFilter']['filterType'] === 'exclude' ? 'blue-container' : ''; ?>" name="wordFilterType" value="exclude">Exclude</button>
+                <button type="submit" name="clearFilterType" class="blue-container item-card-btn w-unset stock-btn"><i class="fa-solid fa-x"></i></button>
             </div>
             <div class="filter-words flex">
                 <?php foreach ($_SESSION['filter']['wordFilter']['items'] as $item) : ?>
@@ -166,7 +170,7 @@ require_once __DIR__ . '/header.php';
                         <?php endforeach; ?>
                     </div>
                     <div class="price">$<?= $pack['price']; ?></div>
-                    <button name="pack" value="<?= $packName; ?>" type="submit" class="item-card-btn green-container">Add to cart</button>
+                    <button name="pack" value="<?= $packName; ?>" type="submit" class="item-card-btn blue-container">Add to cart</button>
                 </div>
             </div>
         <?php endforeach; ?>

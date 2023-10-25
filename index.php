@@ -38,7 +38,7 @@ require_once __DIR__ . '/header.php'; ?>
                         <div class="price">$<?= $item['price']; ?></div>
                         <div class="item-name">Stock <?= $item['stock']; ?></div>
                     </div>
-                    <button name="snack" value="<?= $index; ?>" type="submit" class="item-card-btn green-container">Add to cart</button>
+                    <button name="snack" value="<?= $index; ?>" type="submit" class="item-card-btn blue-container">Add to cart</button>
                 </div>
             </div>
         <?php endforeach; ?>
