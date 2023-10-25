@@ -4,17 +4,7 @@ session_start();
 
 require_once __DIR__ . '/functions.php';
 
-if (!isset($_SESSION['inventory'])) {
-    $_SESSION['inventory'] = generatePriceAndInventory();
-}
-
-if (!isset($_SESSION['wallet'])) {
-    $_SESSION['wallet'] = 9999;
-}
-
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
+initialSessionSet();
 
 if (isset($_GET['snack'])) {
     $snack = $_SESSION['inventory'][$_GET['snack']];
@@ -26,6 +16,10 @@ if (isset($_GET['snack'])) {
     // preventing same action to run again if page is reloaded.
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
+}
+
+if (isset($_GET['stock'])) {
+    orderNewStock();
 }
 
 require_once __DIR__ . '/header.php'; ?>

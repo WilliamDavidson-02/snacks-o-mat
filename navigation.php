@@ -1,6 +1,6 @@
 <nav>
     <div class="stock-wallet-container">
-        <form><button class="item-card-btn stock-btn green-container" type="submit">Order new stock</button></form>
+        <form><button name="stock" class="item-card-btn stock-btn green-container" type="submit">Order new stock</button></form>
         <div class="wallet">$<?= $_SESSION['wallet']; ?></div>
         <a class="item-card-btn stock-btn green-container" href="/">Snacks</a>
         <a class="item-card-btn stock-btn green-container" href="/mix.php">Mix</a>
