@@ -8,16 +8,29 @@ if (isset($_GET['minus'])) {
     if ($key !== false) {
         unset($_SESSION['cart'][$key]);
     }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 } else if (isset($_GET['add'])) {
     if (array_key_exists($_GET['add'], $inventory)) {
         addItemToCart($_GET['add']);
     } else { // else it is a pack.
         addPackToCart($_GET['add']);
     }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 } else if (isset($_GET['delete'])) {
     $_SESSION['cart'] = array_filter($_SESSION['cart'], function ($item) {
         return $item !== $_GET['delete'];
     });
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+$purchased = false;
+
+if (isset($_GET['purchase'])) {
+    $_SESSION['cart'] = [];
+    $purchased = true;
 }
 
 $cart = array_count_values($_SESSION['cart']);
@@ -63,8 +76,16 @@ require_once __DIR__ . '/header.php';
             <?php endforeach; ?>
         </div>
     </div>
-    <div>
-        <div>Total $<?= $totalPrice; ?></div>
+    <div class="purchase-container">
+        <?php if (!$purchased) : ?>
+            <div>Total $<?= $totalPrice; ?></div>
+            <form>
+                <button type="submit" name="purchase" class="stock-btn blue-container item-card-btn">Purchase</button>
+            </form>
+        <?php else : ?>
+            <div>Your order it complete!</div>
+            <a href="/" class="stock-btn blue-container item-card-btn">Return to store.</a>
+        <?php endif; ?>
     </div>
 </main>
 
