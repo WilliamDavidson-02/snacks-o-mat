@@ -8,6 +8,15 @@ if (isset($_GET['minus'])) {
     if ($key !== false) {
         unset($_SESSION['cart'][$key]);
     }
+    if (array_key_exists($_GET['add'], $inventory)) {
+        $_SESSION['inventory'][$_GET['minus']]['stock'] += 1;
+        $_SESSION['wallet'] += $_SESSION['inventory'][$_GET['minus']]['price'];
+    } else { // else it is a pack.
+        foreach ($_SESSION['mixPacks'][$_GET['minus']]['items'] as $itemName => $items) {
+            $_SESSION['inventory'][$itemName]['stock'] += 1;
+        }
+        $_SESSION['wallet'] += $_SESSION['mixPacks'][$_GET['minus']]['price'];
+    }
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 } else if (isset($_GET['add'])) {
