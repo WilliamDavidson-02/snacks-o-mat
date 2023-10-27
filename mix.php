@@ -47,7 +47,7 @@ if (!isset($_SESSION['mixPacks'])) {
     $_SESSION['filter'] = [
         'min' => 0,
         'max' => $highestPrice,
-        'wordFilter' => ['filterType' => '', 'items' => []] // filter type, include or exclude.
+        'wordFilter' => ['filterType' => '', 'items' => []]
     ];
 }
 
@@ -55,7 +55,7 @@ if (isset($_GET['pack'])) {
     addPackToCart($_GET['pack']);
 }
 
-if (isset($_GET['filter']) || isset($_GET['wordFilterType']) || isset($_GET['clearFilterType']) || isset($_GET['removeWord'])) {
+if (isset($_GET['filter'])) {
     $_SESSION['filter']['min'] = $_GET['min'];
     $_SESSION['filter']['max'] = $_GET['max'];
 
@@ -66,17 +66,28 @@ if (isset($_GET['filter']) || isset($_GET['wordFilterType']) || isset($_GET['cle
         }
     }
 
-    if (isset($_GET['removeWord'])) {
-        $_SESSION['filter']['wordFilter']['items'] = array_filter($_SESSION['filter']['wordFilter']['items'], function ($item) {
-            return $item !== $_GET['removeWord'];
-        });
-    }
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
 
-    if (isset($_GET['wordFilterType'])) {
-        $_SESSION['filter']['wordFilter']['filterType'] = $_GET['wordFilterType'];
-    } else if (isset($_GET['clearFilterType'])) {
-        $_SESSION['filter']['wordFilter']['filterType'] = '';
-    }
+if (isset($_GET['removeWord'])) {
+    $_SESSION['filter']['wordFilter']['items'] = array_filter($_SESSION['filter']['wordFilter']['items'], function ($item) {
+        return $item !== $_GET['removeWord'];
+    });
+
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+if (isset($_GET['wordFilterType'])) {
+    $_SESSION['filter']['wordFilter']['filterType'] = $_GET['wordFilterType'];
+
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+if (isset($_GET['clearFilterType'])) {
+    $_SESSION['filter']['wordFilter']['filterType'] = '';
 
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;

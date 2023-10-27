@@ -19,10 +19,10 @@ require_once __DIR__ . '/header.php'; ?>
 <main>
     <?php require_once __DIR__ . '/navigation.php'; ?>
     <form class="item-card-container">
-        <?php foreach ($_SESSION['inventory'] as $index => $item) : ?>
+        <?php foreach ($_SESSION['inventory'] as $itemName => $item) : ?>
             <div class="item-card">
                 <div class="item-title-container">
-                    <h3><?= ucfirst($index); ?></h3>
+                    <h3><?= ucfirst($itemName); ?></h3>
                 </div>
                 <div class="item-content">
                     <div class="item-icon"><?= $item['icon']; ?></div>
@@ -30,7 +30,7 @@ require_once __DIR__ . '/header.php'; ?>
                         <div class="price">$<?= $item['price']; ?></div>
                         <div class="item-name">Stock <?= $item['stock']; ?></div>
                     </div>
-                    <button name="snack" value="<?= $index; ?>" type="submit" class="item-card-btn blue-container">Add to cart</button>
+                    <button name="snack" value="<?= $itemName; ?>" type="submit" class="item-card-btn blue-container">Add to cart</button>
                 </div>
             </div>
         <?php endforeach; ?>
