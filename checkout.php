@@ -93,7 +93,7 @@ require_once __DIR__ . '/header.php';
             </form>
         <?php else : ?>
             <div>Your order it complete!</div>
-            <a href="/" class="stock-btn blue-container item-card-btn">Return to store.</a>
+            <a href="./index.php" class="stock-btn blue-container item-card-btn">Return to store.</a>
         <?php endif; ?>
     </div>
 </main>

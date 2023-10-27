@@ -33,7 +33,7 @@ if (!isset($_SESSION['mixPacks'])) {
         }
         $packs[$pack['name']] = $categoryItems;
     }
-    $_SESSION['mixPacks'] = $pack;
+    $_SESSION['mixPacks'] = $packs;
 
     $highestPrice = 0;
     foreach ($_SESSION['mixPacks'] as $pack) {
